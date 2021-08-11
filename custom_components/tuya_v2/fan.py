@@ -51,6 +51,14 @@ DPCODE_FAN_DIRECTION = "fan_direction"
 DPCODE_AP_FAN_SPEED = "speed"
 DPCODE_AP_FAN_SPEED_ENUM = "fan_speed_enum"
 
+# Ceiling Fan Light
+
+# https://developer.tuya.com/en/docs/iot/f?id=Kaof8fwdfzz9y
+
+DPCODE_CFL_SWITCH = "fan_switch"
+
+DPCODE_CFL_FAN_SPEED = "fan_speed"
+
 TUYA_SUPPORT_TYPE = {
     "fs",  # Fan
     "kj",  # Air Purifier

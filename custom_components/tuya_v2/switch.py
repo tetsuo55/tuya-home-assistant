@@ -36,7 +36,7 @@ TUYA_SUPPORT_TYPE = {
     "zndb",    # Smart Electricity Meter
     "fs",    # Fan
     "zndb"    # Smart Electricity Meter
-    "fsd"    # Ceiling Fan Light
+  #  "fsd"    # Ceiling Fan Light
 
     "kfj",    # Coffee Maker
 
@@ -44,13 +44,13 @@ TUYA_SUPPORT_TYPE = {
 
 # Switch(kg), Socket(cz), Power Strip(pc)
 # https://developer.tuya.com/en/docs/iot/categorykgczpc?id=Kaiuz08zj1l4y
-if self.tuya_device.category == "fsd":
+#if self.tuya_device.category == "fsd":
 
-    DPCODE_SWITCH = "fan_switch"
+ #   DPCODE_SWITCH = "fan_switch"
 
 
 
-else DPCODE_SWITCH = "switch":
+ DPCODE_SWITCH = "switch":
 
 # Air Purifier
 # https://developer.tuya.com/en/docs/iot/categorykj?id=Kaiuz1atqo5l7

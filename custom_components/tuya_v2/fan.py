@@ -191,10 +191,10 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
 
     def turn_off(self, **kwargs: Any) -> None:
         """Turn the fan off."""
-       # if self.tuya_device.category == "fsd":
-         #   DPCODE_SWITCH = "fan_switch"
-       #  else:
-        #    DPCODE_SWITCH = "switch"
+        if self.tuya_device.category == "fsd":
+            DPCODE_SWITCH = "fan_switch"
+         else:
+            DPCODE_SWITCH = "switch"
             self._send_command([{"code": DPCODE_SWITCH, "value": False}])
 
     def turn_on(
@@ -205,6 +205,13 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         **kwargs: Any,
     ) -> None:
         """Turn on the fan."""
+        if device.category == "fsd":
+
+          DPCODE_SWITCH = "fan_switch"
+
+         else:
+
+            DPCODE_SWITCH = "switch"
         self._send_command([{"code": DPCODE_SWITCH, "value": True}])
 
     def oscillate(self, oscillating: bool) -> None:
@@ -216,6 +223,13 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
     @property
     def is_on(self) -> bool:
         """Return true if fan is on."""
+        if device.category == "fsd":
+
+          DPCODE_SWITCH = "fan_switch"
+
+         else:
+
+            DPCODE_SWITCH = "switch"
         return self.tuya_device.status.get(DPCODE_SWITCH, False)
 
     @property

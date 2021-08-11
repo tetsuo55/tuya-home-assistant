@@ -60,7 +60,7 @@ TUYA_SUPPORT_TYPE = {
 #if TUYA_SUPPORT_TYPE  == "fsd":
   #  DPCODE_SWITCH = "switch"
 #else:
-    DPCODE_SWITCH = "fan_switch"
+  #  DPCODE_SWITCH = "fan_switch"
 DPCODE_FAN_SPEED = "fan_speed_percent"
 DPCODE_MODE = "mode"
 DPCODE_SWITCH_HORIZONTAL = "switch_horizontal"
@@ -150,15 +150,15 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
                         self.air_purifier_speed_range_enum = data
             except Exception:
                 _LOGGER.error("Cannot parse the air-purifier speed range")
-'""Turn the fan off."""
 
-     #   if device.category == "fsd":
 
-       #     DPCODE_SWITCH = "fan_switch"
+     if device.category == "fsd":
 
-       #  else:
+          DPCODE_SWITCH = "fan_switch"
 
-         #   DPCODE_SWITCH = "switch"
+         else:
+
+            DPCODE_SWITCH = "switch"
 
 
     def set_preset_mode(self, preset_mode: str) -> None:

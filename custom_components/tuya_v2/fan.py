@@ -57,10 +57,10 @@ TUYA_SUPPORT_TYPE = {
 # Fan
 # https://developer.tuya.com/en/docs/iot/f?id=K9gf45vs7vkge
 
-if TUYA_SUPPORT_TYPE  == "fsd":
-    DPCODE_SWITCH = "switch"
-else:
-    DPCODE_SWITCH = "fan_switch"
+#if TUYA_SUPPORT_TYPE  == "fsd":
+  #  DPCODE_SWITCH = "switch"
+#else:
+ #   DPCODE_SWITCH = "fan_switch"
 DPCODE_FAN_SPEED = "fan_speed_percent"
 DPCODE_MODE = "mode"
 DPCODE_SWITCH_HORIZONTAL = "switch_horizontal"
@@ -150,6 +150,16 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
                         self.air_purifier_speed_range_enum = data
             except Exception:
                 _LOGGER.error("Cannot parse the air-purifier speed range")
+"Turn the fan off."""
+
+        if self.tuya_device.category == "fsd":
+
+            DPCODE_SWITCH = "fan_switch"
+
+         else:
+
+            DPCODE_SWITCH = "switch"
+
 
     def set_preset_mode(self, preset_mode: str) -> None:
         """Set the preset mode of the fan."""
@@ -174,7 +184,11 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
 
     def turn_off(self, **kwargs: Any) -> None:
         """Turn the fan off."""
-        self._send_command([{"code": DPCODE_SWITCH, "value": False}])
+       # if self.tuya_device.category == "fsd":
+         #   DPCODE_SWITCH = "fan_switch"
+       #  else:
+        #    DPCODE_SWITCH = "switch"
+            self._send_command([{"code": DPCODE_SWITCH, "value": False}])
 
     def turn_on(
         self,

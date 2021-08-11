@@ -150,7 +150,7 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
                         self.air_purifier_speed_range_enum = data
             except Exception:
                 _LOGGER.error("Cannot parse the air-purifier speed range")
-"Turn the fan off."""
+'""Turn the fan off."""
 
         if self.tuya_device.category == "fsd":
 

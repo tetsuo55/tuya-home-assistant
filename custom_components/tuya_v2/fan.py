@@ -152,13 +152,13 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
                 _LOGGER.error("Cannot parse the air-purifier speed range")
 '""Turn the fan off."""
 
-        if device.category == "fsd":
+     #   if device.category == "fsd":
 
             DPCODE_SWITCH = "fan_switch"
 
-         else:
+       #  else:
 
-            DPCODE_SWITCH = "switch"
+         #   DPCODE_SWITCH = "switch"
 
 
     def set_preset_mode(self, preset_mode: str) -> None:

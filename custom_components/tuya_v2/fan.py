@@ -55,9 +55,9 @@ DPCODE_AP_FAN_SPEED_ENUM = "fan_speed_enum"
 
 # https://developer.tuya.com/en/docs/iot/f?id=Kaof8fwdfzz9y
 
-DPCODE_CFL_SWITCH = "fan_switch"
+DPCODE_FSD_SWITCH = "fan_switch"
 
-DPCODE_CFL_FAN_SPEED = "fan_speed"
+DPCODE_FSD_FAN_SPEED = "fan_speed"
 
 TUYA_SUPPORT_TYPE = {
     "fs",  # Fan
@@ -149,6 +149,8 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
 
     def set_percentage(self, percentage: int) -> None:
         """Set the speed of the fan, as a percentage."""
+        if self.tuya_device.category == "fsd":
+            self._send_command([{"code": DPCODE_FSD_FAN_SPEED, "value": percentage}])
         if self.tuya_device.category == "kj":
             value_in_range = percentage_to_ordered_list_item(
                     self.air_purifier_speed_range_enum, percentage)
@@ -161,6 +163,9 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
 
     def turn_off(self, **kwargs: Any) -> None:
         """Turn the fan off."""
+        if self.tuya_device.category == "fsd":
+            self._send_command([{"code": DPCODE_FSD_SWITCH, "value": False}])
+        else:
         self._send_command([{"code": DPCODE_SWITCH, "value": False}])
 
     def turn_on(
@@ -171,6 +176,11 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         **kwargs: Any,
     ) -> None:
         """Turn on the fan."""
+        if self.tuya_device.category == "fsd":
+
+            self._send_command([{"code": DPCODE_FSD_SWITCH, "value": True}])
+
+        else:
         self._send_command([{"code": DPCODE_SWITCH, "value": True}])
 
     def oscillate(self, oscillating: bool) -> None:
@@ -182,6 +192,11 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
     @property
     def is_on(self) -> bool:
         """Return true if fan is on."""
+        if self.tuya_device.category == "fsd":
+
+           return self.tuya_device.status.get(DPCODE_FSD_SWITCH, False)
+
+        else:  
         return self.tuya_device.status.get(DPCODE_SWITCH, False)
 
     @property
@@ -233,7 +248,11 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
                             DPCODE_AP_FAN_SPEED_ENUM, 0)
                     )
 
-        return self.tuya_device.status.get(DPCODE_FAN_SPEED, 0)
+        if self.tuya_device.category == "fsd" :
+            return self.tuya_device.status.get(DPCODE_FSD_FAN_SPEED, 0)
+        else
+
+           breturn self.tuya_device.status.get(DPCODE_FAN_SPEED, 0)
 
     @property
     def speed_count(self) -> int:
@@ -259,6 +278,12 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         if (
             DPCODE_AP_FAN_SPEED in self.tuya_device.status
             or DPCODE_AP_FAN_SPEED_ENUM in self.tuya_device.status
+     
         ):
+            supports = supports | SUPPORT_SET_SPEED
+            
+        # Ceiling fan light specific
+
+        if DPCODE_FSD_FAN_SPEED in self.tuya_device.status
             supports = supports | SUPPORT_SET_SPEED
         return supports

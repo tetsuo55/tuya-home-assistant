@@ -44,7 +44,7 @@ _LOGGER = logging.getLogger(__name__)
 #if self.tuya_device.category == "fsd":
  #   DPCODE_SWITCH = "fan_switch"
 
- DPCODE_SWITCH = "switch":
+ DPCODE_SWITCH = "switch"
 DPCODE_FAN_SPEED = "fan_speed_percent"
 DPCODE_MODE = "mode"
 DPCODE_SWITCH_HORIZONTAL = "switch_horizontal"

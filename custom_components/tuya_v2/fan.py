@@ -61,7 +61,7 @@ TUYA_SUPPORT_TYPE = {
   #  DPCODE_SWITCH = "switch"
 #else:
 #DPCODE_SWITCH = "fan_switch"
-DPCODE_FAN_SPEED = "fan_speed_percent"
+#DPCODE_FAN_SPEED = "fan_speed_percent"
 DPCODE_MODE = "mode"
 DPCODE_SWITCH_HORIZONTAL = "switch_horizontal"
 DPCODE_FAN_DIRECTION = "fan_direction"
@@ -137,10 +137,12 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         if self.tuya_device.category == "fsd":
 
             DPCODE_SWITCH = "fan_switch"
+            PCODE_FAN_SPEED = "fan_speed"
 
         else:
 
             DPCODE_SWITCH = "switch"
+            PCODE_FAN_SPEED = "fan_speed_percent"
         if self.tuya_device.category == "kj":
             try:
                 if DPCODE_AP_FAN_SPEED_ENUM in self.tuya_device.status\

@@ -54,7 +54,9 @@ DPCODE_AP_FAN_SPEED_ENUM = "fan_speed_enum"
 TUYA_SUPPORT_TYPE = {
     "fs",  # Fan
     "kj",  # Air Purifier
-    "fsd", # ceiling fan light}
+    "fsd", # ceiling fan light
+
+}
 
 
 async def async_setup_entry(

@@ -59,7 +59,7 @@ DPCODE_AP_FAN_SPEED_ENUM = "fan_speed_enum"
 
 # https://developer.tuya.com/en/docs/iot/f?id=Kaof8fwdfzz9y
 
-DPCODE_FSD_SWITCH = "fan_switch"
+#DPCODE_FSD_SWITCH = "fan_switch"
 
 DPCODE_FSD_FAN_SPEED = "fan_speed"
 

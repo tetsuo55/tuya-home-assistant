@@ -136,9 +136,9 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         self.air_purifier_speed_range_enum = []
         if self.tuya_device.category == "fsd":
 
-          DPCODE_SWITCH = "fan_switch"
+            DPCODE_SWITCH = "fan_switch"
 
-         else:
+        else:
 
             DPCODE_SWITCH = "switch"
         if self.tuya_device.category == "kj":
@@ -159,13 +159,7 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
                 _LOGGER.error("Cannot parse the air-purifier speed range")
 
 
-     if device.category == "fsd":
 
-          DPCODE_SWITCH = "fan_switch"
-
-         else:
-
-            DPCODE_SWITCH = "switch"
 
 
     def set_preset_mode(self, preset_mode: str) -> None:
@@ -193,9 +187,9 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         """Turn the fan off."""
         if self.tuya_device.category == "fsd":
             DPCODE_SWITCH = "fan_switch"
-         else:
+        else:
             DPCODE_SWITCH = "switch"
-            self._send_command([{"code": DPCODE_SWITCH, "value": False}])
+        self._send_command([{"code": DPCODE_SWITCH, "value": False}])
 
     def turn_on(
         self,
@@ -207,9 +201,9 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         """Turn on the fan."""
         if self.tuya_device.category == "fsd":
 
-          DPCODE_SWITCH = "fan_switch"
+            DPCODE_SWITCH = "fan_switch"
 
-         else:
+        else:
 
             DPCODE_SWITCH = "switch"
         self._send_command([{"code": DPCODE_SWITCH, "value": True}])
@@ -225,9 +219,9 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         """Return true if fan is on."""
         if self.tuya_device.category == "fsd":
 
-          DPCODE_SWITCH = "fan_switch"
+            DPCODE_SWITCH = "fan_switch"
 
-         else:
+        else:
 
             DPCODE_SWITCH = "switch"
         return self.tuya_device.status.get(DPCODE_SWITCH, False)

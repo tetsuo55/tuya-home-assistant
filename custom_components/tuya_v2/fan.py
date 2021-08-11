@@ -153,9 +153,9 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
 
     def set_percentage(self, percentage: int) -> None:
         """Set the speed of the fan, as a percentage."""
-        if self.tuya_device.category == "fsd":
-            self._send_command([{"code": DPCODE_FSD_FAN_SPEED, "value": percentage}])
-        else:
+  #      if self.tuya_device.category == "fsd":
+     #       self._send_command([{"code": DPCODE_FSD_FAN_SPEED, "value": percentage}])
+    #    else:
         if self.tuya_device.category == "kj":
             value_in_range = percentage_to_ordered_list_item(
                     self.air_purifier_speed_range_enum, percentage)

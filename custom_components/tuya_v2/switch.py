@@ -50,7 +50,7 @@ if self.tuya_device.category == "fsd":
 
 
 
-else DPCODE_SWITCH = "switch"
+else DPCODE_SWITCH = "switch":
 
 # Air Purifier
 # https://developer.tuya.com/en/docs/iot/categorykj?id=Kaiuz1atqo5l7

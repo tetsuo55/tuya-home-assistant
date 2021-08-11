@@ -50,7 +50,7 @@ TUYA_SUPPORT_TYPE = {
 
 
 
- DPCODE_SWITCH = "switch":
+ DPCODE_SWITCH = "switch"
 
 # Air Purifier
 # https://developer.tuya.com/en/docs/iot/categorykj?id=Kaiuz1atqo5l7

@@ -151,6 +151,7 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         """Set the speed of the fan, as a percentage."""
         if self.tuya_device.category == "fsd":
             self._send_command([{"code": DPCODE_FSD_FAN_SPEED, "value": percentage}])
+        else:
         if self.tuya_device.category == "kj":
             value_in_range = percentage_to_ordered_list_item(
                     self.air_purifier_speed_range_enum, percentage)
@@ -247,12 +248,12 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
                         self.air_purifier_speed_range_enum, self.tuya_device.status.get(
                             DPCODE_AP_FAN_SPEED_ENUM, 0)
                     )
-
+      
         if self.tuya_device.category == "fsd" :
             return self.tuya_device.status.get(DPCODE_FSD_FAN_SPEED, 0)
-        else
+        
 
-           breturn self.tuya_device.status.get(DPCODE_FAN_SPEED, 0)
+           return self.tuya_device.status.get(DPCODE_FAN_SPEED, 0)
 
     @property
     def speed_count(self) -> int:
@@ -284,6 +285,6 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
             
         # Ceiling fan light specific
 
-        if DPCODE_FSD_FAN_SPEED in self.tuya_device.status
+        if DPCODE_FSD_FAN_SPEED in self.tuya_device.status:
             supports = supports | SUPPORT_SET_SPEED
         return supports

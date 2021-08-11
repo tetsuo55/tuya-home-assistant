@@ -37,6 +37,9 @@ TUYA_SUPPORT_TYPE = {
     "fs",    # Fan
     "zndb"    # Smart Electricity Meter
     "kfj",    # Coffee Maker
+    "fsd",    # Ceiling Fan Light
+
+
 }
 
 # Switch(kg), Socket(cz), Power Strip(pc)

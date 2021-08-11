@@ -134,7 +134,7 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         #   Range is used for e.g. Concept CA3000
         self.air_purifier_speed_range_len = 0
         self.air_purifier_speed_range_enum = []
-        if device.category == "fsd":
+        if self.tuya_device.category == "fsd":
 
           DPCODE_SWITCH = "fan_switch"
 
@@ -205,7 +205,7 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         **kwargs: Any,
     ) -> None:
         """Turn on the fan."""
-        if device.category == "fsd":
+        if self.tuya_device.category == "fsd":
 
           DPCODE_SWITCH = "fan_switch"
 
@@ -223,7 +223,7 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
     @property
     def is_on(self) -> bool:
         """Return true if fan is on."""
-        if device.category == "fsd":
+        if self.tuya_device.category == "fsd":
 
           DPCODE_SWITCH = "fan_switch"
 

@@ -63,7 +63,7 @@ TUYA_SUPPORT_TYPE = {
     "xdd",  # Ceiling Light
     "xxj",  # Diffuser's light
     "fs",  # Fan
-    "fsd" # ceiling fqn light
+    "fsd", # ceiling fqn light
 
 }
 

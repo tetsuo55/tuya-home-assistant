@@ -41,7 +41,7 @@ _LOGGER = logging.getLogger(__name__)
 # Fan
 # https://developer.tuya.com/en/docs/iot/f?id=K9gf45vs7vkge
 
-if self.tuya_device.category == "fsd" :
+if self.tuya_device.category == "fsd":
     DPCODE_SWITCH = "fan_switch"
 else:
     DPCODE_SWITCH = "switch"

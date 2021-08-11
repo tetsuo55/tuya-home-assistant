@@ -134,6 +134,13 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         #   Range is used for e.g. Concept CA3000
         self.air_purifier_speed_range_len = 0
         self.air_purifier_speed_range_enum = []
+        if device.category == "fsd":
+
+          DPCODE_SWITCH = "fan_switch"
+
+         else:
+
+            DPCODE_SWITCH = "switch"
         if self.tuya_device.category == "kj":
             try:
                 if DPCODE_AP_FAN_SPEED_ENUM in self.tuya_device.status\

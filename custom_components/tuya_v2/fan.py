@@ -40,7 +40,7 @@ _LOGGER = logging.getLogger(__name__)
 
 # Fan
 # https://developer.tuya.com/en/docs/iot/f?id=K9gf45vs7vkge
-DPCODE_SWITCH = "switch"
+DPCODE_SWITCH = "fan_switch"
 DPCODE_FAN_SPEED = "fan_speed_percent"
 DPCODE_MODE = "mode"
 DPCODE_SWITCH_HORIZONTAL = "switch_horizontal"

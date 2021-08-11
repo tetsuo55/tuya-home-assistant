@@ -168,9 +168,9 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
 
     def turn_off(self, **kwargs: Any) -> None:
         """Turn the fan off."""
-        if self.tuya_device.category == "fsd":
-            self._send_command([{"code": DPCODE_FSD_SWITCH, "value": False}])
-        else:
+    #    if self.tuya_device.category == "fsd":
+    #        self._send_command([{"code": DPCODE_FSD_SWITCH, "value": False}])
+    #    else:
         self._send_command([{"code": DPCODE_SWITCH, "value": False}])
 
     def turn_on(

@@ -60,7 +60,7 @@ TUYA_SUPPORT_TYPE = {
 #if TUYA_SUPPORT_TYPE  == "fsd":
   #  DPCODE_SWITCH = "switch"
 #else:
-  #  DPCODE_SWITCH = "fan_switch"
+    DPCODE_SWITCH = "fan_switch"
 DPCODE_FAN_SPEED = "fan_speed_percent"
 DPCODE_MODE = "mode"
 DPCODE_SWITCH_HORIZONTAL = "switch_horizontal"

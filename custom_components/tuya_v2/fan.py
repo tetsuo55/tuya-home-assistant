@@ -38,8 +38,14 @@ _LOGGER = logging.getLogger(__name__)
 
 # Fan
 # https://developer.tuya.com/en/docs/iot/f?id=K9gf45vs7vkge
-DPCODE_SWITCH = "switch"
-DPCODE_FAN_SPEED = "fan_speed_percent"
+if self.tuya_device.category == "fsd":
+    DPCODE_SWITCH = "fan_switch"
+else:
+    DPCODE_SWITCH = "switch"
+if self.tuya_device.category == "fsd":
+    DPCODE_FAN_SPEED = "fan_speed"
+else:
+    DPCODE_FAN_SPEED = "fan_speed_percent"   
 DPCODE_MODE = "mode"
 DPCODE_SWITCH_HORIZONTAL = "switch_horizontal"
 DPCODE_FAN_DIRECTION = "fan_direction"
@@ -52,6 +58,7 @@ DPCODE_AP_FAN_SPEED_ENUM = "fan_speed_enum"
 TUYA_SUPPORT_TYPE = {
     "fs",  # Fan
     "kj",  # Air Purifier
+    "fsd", # ceiling fan light
 }
 
 

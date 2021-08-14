@@ -294,7 +294,7 @@ class TuyaHaLight(TuyaHaDevice, LightEntity):
         """Return the color_temp of the light."""
         new_range = self._tuya_temp_range()
         tuya_color_temp = self.tuya_device.status.get(self.dp_code_temp, 0)
-        ha_color_temp = (
+        return (
             self.max_mireds
             - self.remap(
                 tuya_color_temp,
@@ -305,7 +305,6 @@ class TuyaHaLight(TuyaHaDevice, LightEntity):
             )
             + self.min_mireds
         )
-        return ha_color_temp
 
     @property
     def min_mireds(self):
@@ -358,13 +357,13 @@ class TuyaHaLight(TuyaHaDevice, LightEntity):
         """Flag supported features."""
         supports = 0
         if self.dp_code_bright in self.tuya_device.status:
-            supports = supports | SUPPORT_BRIGHTNESS
+            supports |= SUPPORT_BRIGHTNESS
 
         if (
             self.dp_code_colour in self.tuya_device.status
             and len(self.tuya_device.status[self.dp_code_colour]) > 0
         ):
-            supports = supports | SUPPORT_COLOR
+            supports |= SUPPORT_COLOR
         if self.dp_code_temp in self.tuya_device.status:
-            supports = supports | SUPPORT_COLOR_TEMP
+            supports |= SUPPORT_COLOR_TEMP
         return supports

@@ -38,6 +38,8 @@ _LOGGER = logging.getLogger(__name__)
 
 # Fan
 # https://developer.tuya.com/en/docs/iot/f?id=K9gf45vs7vkge
+DPCODE_SWITCH = "switch"
+DPCODE_FAN_SPEED = "fan_speed_percent"  
 DPCODE_MODE = "mode"
 DPCODE_SWITCH_HORIZONTAL = "switch_horizontal"
 DPCODE_FAN_DIRECTION = "fan_direction"
@@ -47,6 +49,10 @@ DPCODE_FAN_DIRECTION = "fan_direction"
 DPCODE_AP_FAN_SPEED = "speed"
 DPCODE_AP_FAN_SPEED_ENUM = "fan_speed_enum"
 
+# fsd
+DPCODE_FSD_SWITCH = "fan_switch"
+DPCODE_FSD_FAN_SPEED = "fan_speed"
+  
 TUYA_SUPPORT_TYPE = {
     "fs",  # Fan
     "kj",  # Air Purifier
@@ -101,13 +107,7 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
     def __init__(self, device: TuyaDevice, device_manager: TuyaDeviceManager) -> None:
         """Init Tuya Fan Device."""
         super().__init__(device, device_manager)
-
-        if self.tuya_device.category == "fsd":
-            DPCODE_SWITCH = "fan_switch"
-            DPCODE_FAN_SPEED = "fan_speed"
-        else:
-            DPCODE_SWITCH = "switch"
-            DPCODE_FAN_SPEED = "fan_speed_percent"   
+ 
         # Air purifier fan can be controlled either via the ranged values or via the enum.
         # We will always prefer the enumeration if available
         #   Enum is used for e.g. MEES SmartHIMOX-H06
@@ -159,12 +159,17 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
                     }
                 ]
             )
+        elif self.tuya_device.category == "fsd":
+            self._send_command([{"code": DPCODE_FSD_FAN_SPEED, "value": percentage}])
         else:
             self._send_command([{"code": DPCODE_FAN_SPEED, "value": percentage}])
 
     def turn_off(self, **kwargs: Any) -> None:
         """Turn the fan off."""
-        self._send_command([{"code": DPCODE_SWITCH, "value": False}])
+        if self.tuya_device.category == "fsd":
+            self._send_command([{"code": DPCODE_FSD_SWITCH, "value": False}])
+        else:              
+            self._send_command([{"code": DPCODE_SWITCH, "value": False}])
 
     def turn_on(
         self,
@@ -174,7 +179,10 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         **kwargs: Any,
     ) -> None:
         """Turn on the fan."""
-        self._send_command([{"code": DPCODE_SWITCH, "value": True}])
+        if self.tuya_device.category == "fsd":
+            self._send_command([{"code": DPCODE_FSD_SWITCH, "value": True}])
+        else:  
+            self._send_command([{"code": DPCODE_SWITCH, "value": True}])
 
     def oscillate(self, oscillating: bool) -> None:
         """Oscillate the fan."""
@@ -183,7 +191,10 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
     @property
     def is_on(self) -> bool:
         """Return true if fan is on."""
-        return self.tuya_device.status.get(DPCODE_SWITCH, False)
+        if self.tuya_device.category == "fsd":
+            return self.tuya_device.status.get(DPCODE_FSD_SWITCH, False)
+        else:  
+            return self.tuya_device.status.get(DPCODE_SWITCH, False)
 
     @property
     def current_direction(self) -> str:
@@ -233,8 +244,10 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
                         self.air_purifier_speed_range_enum,
                         self.tuya_device.status.get(DPCODE_AP_FAN_SPEED_ENUM, 0),
                     )
-
-        return self.tuya_device.status.get(DPCODE_FAN_SPEED, 0)
+        elif self.tuya_device.category == "fsd":
+            return self.tuya_device.status.get(DPCODE_FSD_FAN_SPEED, 0)
+        else
+            return self.tuya_device.status.get(DPCODE_FAN_SPEED, 0)
 
     @property
     def speed_count(self) -> int:
@@ -250,6 +263,8 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         if DPCODE_MODE in self.tuya_device.status:
             supports = supports | SUPPORT_PRESET_MODE
         if DPCODE_FAN_SPEED in self.tuya_device.status:
+            supports = supports | SUPPORT_SET_SPEED
+        if DPCODE_FSD_FAN_SPEED in self.tuya_device.status:
             supports = supports | SUPPORT_SET_SPEED
         if DPCODE_SWITCH_HORIZONTAL in self.tuya_device.status:
             supports = supports | SUPPORT_OSCILLATE

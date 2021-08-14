@@ -108,7 +108,7 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
             DPCODE_SWITCH = "switch"
         if self.tuya_device.category == "fsd":
             DPCODE_FAN_SPEED = "fan_speed"
-       else:
+        else:
             DPCODE_FAN_SPEED = "fan_speed_percent"   
         # Air purifier fan can be controlled either via the ranged values or via the enum.
         # We will always prefer the enumeration if available

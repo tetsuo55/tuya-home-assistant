@@ -317,10 +317,9 @@ class TuyaHaClimate(TuyaHaDevice, ClimateEntity):
             temp_value = json.loads(
                 self.tuya_device.function.get(DPCODE_TEMP_SET, {}).values
             )
-            low_value = (
+            return (
                 temp_value.get("min", 0) * 1.0 / (10 ** self.get_temp_set_scale())
             )
-            return low_value
         if DPCODE_TEMP_SET_F not in self.tuya_device.function:
             return 0
         temp_value = json.loads(
@@ -397,10 +396,9 @@ class TuyaHaClimate(TuyaHaDevice, ClimateEntity):
     @property
     def fan_modes(self) -> list[str]:
         """Return fan modes for select."""
-        data = json.loads(
+        return json.loads(
             self.tuya_device.function.get(DPCODE_FAN_SPEED_ENUM, {}).values
         ).get("range")
-        return data
 
     @property
     def swing_mode(self) -> str:
@@ -438,14 +436,14 @@ class TuyaHaClimate(TuyaHaDevice, ClimateEntity):
             DPCODE_TEMP_SET in self.tuya_device.status
             or DPCODE_TEMP_SET_F in self.tuya_device.status
         ):
-            supports = supports | SUPPORT_TARGET_TEMPERATURE
+            supports |= SUPPORT_TARGET_TEMPERATURE
         if DPCODE_FAN_SPEED_ENUM in self.tuya_device.status:
-            supports = supports | SUPPORT_FAN_MODE
+            supports |= SUPPORT_FAN_MODE
         if DPCODE_HUMIDITY_SET in self.tuya_device.status:
-            supports = supports | SUPPORT_TARGET_HUMIDITY
+            supports |= SUPPORT_TARGET_HUMIDITY
         if (
             DPCODE_SWITCH_HORIZONTAL in self.tuya_device.status
             or DPCODE_SWITCH_VERTICAL in self.tuya_device.status
         ):
-            supports = supports | SUPPORT_SWING_MODE
+            supports |= SUPPORT_SWING_MODE
         return supports

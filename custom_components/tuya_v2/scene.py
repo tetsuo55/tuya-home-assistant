@@ -21,12 +21,9 @@ async def async_setup_entry(
     """Set up tuya scenes."""
     _LOGGER.info("scenes init")
 
-    entities = []
-
     __home_manager = hass.data[DOMAIN][TUYA_HOME_MANAGER]
     scenes = await hass.async_add_executor_job(__home_manager.query_scenes)
-    for scene in scenes:
-        entities.append(TuyaHAScene(__home_manager, scene))
+    entities = [TuyaHAScene(__home_manager, scene) for scene in scenes]
 
     async_add_entities(entities)
 
@@ -58,13 +55,12 @@ class TuyaHAScene(Scene):
     @property
     def device_info(self):
         """Return a device description for device registry."""
-        _device_info = {
+        return {
             "identifiers": {(DOMAIN, f"{self.unique_id}")},
             "manufacturer": "tuya",
             "name": self.scene.name,
             "model": "Tuya Scene",
         }
-        return _device_info
 
     @property
     def available(self) -> bool:

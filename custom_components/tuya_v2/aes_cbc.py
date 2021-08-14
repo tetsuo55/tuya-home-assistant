@@ -57,7 +57,7 @@ class AesCBC:
         num = 0
         for each in data:
             if num >= lkey:
-                num = num % lkey
+                num %= lkey
             secret.append(chr(ord(each) ^ ord(key[num])))
             num += 1
         return b64.b64encode("".join(secret).encode()).decode()
@@ -70,7 +70,7 @@ class AesCBC:
         num = 0
         for each in tips:
             if num >= lkey:
-                num = num % lkey
+                num %= lkey
             secret.append(chr(ord(each) ^ ord(key[num])))
             num += 1
         return "".join(secret)

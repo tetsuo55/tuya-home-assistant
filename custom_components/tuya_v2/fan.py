@@ -217,10 +217,9 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
             return []
 
         try:
-            data = json.loads(
+            return json.loads(
                 self.tuya_device.function.get(DPCODE_MODE, {}).values
             ).get("range")
-            return data
         except Exception:
             _LOGGER.error("Cannot parse the preset modes")
         return []
@@ -237,13 +236,15 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
             return 0
 
         if self.tuya_device.category == "kj":
-            if self.air_purifier_speed_range_len > 1:
-                if not self.air_purifier_speed_range_enum:
-                    # if air-purifier speed enumeration is supported we will prefer it.
-                    return ordered_list_item_to_percentage(
-                        self.air_purifier_speed_range_enum,
-                        self.tuya_device.status.get(DPCODE_AP_FAN_SPEED_ENUM, 0),
-                    )
+            if (
+                self.air_purifier_speed_range_len > 1
+                and not self.air_purifier_speed_range_enum
+            ):
+                # if air-purifier speed enumeration is supported we will prefer it.
+                return ordered_list_item_to_percentage(
+                    self.air_purifier_speed_range_enum,
+                    self.tuya_device.status.get(DPCODE_AP_FAN_SPEED_ENUM, 0),
+                )
         elif self.tuya_device.category == "fsd":
             return self.tuya_device.status.get(DPCODE_FSD_FAN_SPEED, 0)
         else:
@@ -261,20 +262,20 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         """Flag supported features."""
         supports = 0
         if DPCODE_MODE in self.tuya_device.status:
-            supports = supports | SUPPORT_PRESET_MODE
+            supports |= SUPPORT_PRESET_MODE
         if DPCODE_FAN_SPEED in self.tuya_device.status:
-            supports = supports | SUPPORT_SET_SPEED
+            supports |= SUPPORT_SET_SPEED
         if DPCODE_FSD_FAN_SPEED in self.tuya_device.status:
-            supports = supports | SUPPORT_SET_SPEED
+            supports |= SUPPORT_SET_SPEED
         if DPCODE_SWITCH_HORIZONTAL in self.tuya_device.status:
-            supports = supports | SUPPORT_OSCILLATE
+            supports |= SUPPORT_OSCILLATE
         if DPCODE_FAN_DIRECTION in self.tuya_device.status:
-            supports = supports | SUPPORT_DIRECTION
+            supports |= SUPPORT_DIRECTION
 
         # Air Purifier specific
         if (
             DPCODE_AP_FAN_SPEED in self.tuya_device.status
             or DPCODE_AP_FAN_SPEED_ENUM in self.tuya_device.status
         ):
-            supports = supports | SUPPORT_SET_SPEED
+            supports |= SUPPORT_SET_SPEED
         return supports

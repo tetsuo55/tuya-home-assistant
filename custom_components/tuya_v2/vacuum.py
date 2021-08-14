@@ -125,7 +125,7 @@ class TuyaHaVacuum(TuyaHaDevice, StateVacuumEntity):
             return STATE_IDLE
         if status == "goto_charge":
             return STATE_RETURNING
-        if status == "charging" or status == "charge_done":
+        if status in ["charging", "charge_done"]:
             return STATE_DOCKED
         return STATE_CLEANING
 
@@ -134,17 +134,17 @@ class TuyaHaVacuum(TuyaHaDevice, StateVacuumEntity):
         """Flag supported features."""
         supports = 0
         if DPCODE_PAUSE in self.tuya_device.status:
-            supports = supports | SUPPORT_PAUSE
+            supports |= SUPPORT_PAUSE
         if DPCODE_RETURN_HOME in self.tuya_device.status:
-            supports = supports | SUPPORT_RETURN_HOME
+            supports |= SUPPORT_RETURN_HOME
         if DPCODE_STATUS in self.tuya_device.status:
-            supports = supports | SUPPORT_STATE
-            supports = supports | SUPPORT_STATUS
+            supports |= SUPPORT_STATE
+            supports |= SUPPORT_STATUS
         if DPCODE_POWER_GO in self.tuya_device.status:
-            supports = supports | SUPPORT_STOP
-            supports = supports | SUPPORT_START
+            supports |= SUPPORT_STOP
+            supports |= SUPPORT_START
         if DPCODE_BATTERY in self.tuya_device.status:
-            supports = supports | SUPPORT_BATTERY
+            supports |= SUPPORT_BATTERY
         return supports
 
     # def turn_on(self, **kwargs: Any) -> None:

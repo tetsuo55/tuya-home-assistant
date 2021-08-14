@@ -38,14 +38,6 @@ _LOGGER = logging.getLogger(__name__)
 
 # Fan
 # https://developer.tuya.com/en/docs/iot/f?id=K9gf45vs7vkge
-if self.tuya_device.category == "fsd":
-    DPCODE_SWITCH = "fan_switch"
-else:
-    DPCODE_SWITCH = "switch"
-if self.tuya_device.category == "fsd":
-    DPCODE_FAN_SPEED = "fan_speed"
-else:
-    DPCODE_FAN_SPEED = "fan_speed_percent"   
 DPCODE_MODE = "mode"
 DPCODE_SWITCH_HORIZONTAL = "switch_horizontal"
 DPCODE_FAN_DIRECTION = "fan_direction"
@@ -110,6 +102,14 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         """Init Tuya Fan Device."""
         super().__init__(device, device_manager)
 
+        if self.tuya_device.category == "fsd":
+            DPCODE_SWITCH = "fan_switch"
+        else:
+            DPCODE_SWITCH = "switch"
+        if self.tuya_device.category == "fsd":
+            DPCODE_FAN_SPEED = "fan_speed"
+       else:
+            DPCODE_FAN_SPEED = "fan_speed_percent"   
         # Air purifier fan can be controlled either via the ranged values or via the enum.
         # We will always prefer the enumeration if available
         #   Enum is used for e.g. MEES SmartHIMOX-H06

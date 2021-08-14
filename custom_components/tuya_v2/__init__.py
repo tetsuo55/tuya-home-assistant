@@ -283,11 +283,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Async setup hass config entry."""
     _LOGGER.info(f"tuya.__init__.async_setup_entry-->{entry.data}")
 
-    hass.data[DOMAIN] = {TUYA_HA_TUYA_MAP: {}, TUYA_HA_DEVICES: []}
-    hass.data[DOMAIN][TUYA_SETUP_PLATFORM] = set()
+    hass.data[DOMAIN] = {
+        TUYA_HA_TUYA_MAP: {},
+        TUYA_HA_DEVICES: [],
+        TUYA_SETUP_PLATFORM: set(),
+    }
 
     success = await _init_tuya_sdk(hass, entry)
-    if not success:
-        return False
-
-    return True
+    return bool(success)

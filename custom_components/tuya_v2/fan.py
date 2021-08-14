@@ -246,7 +246,7 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
                     )
         elif self.tuya_device.category == "fsd":
             return self.tuya_device.status.get(DPCODE_FSD_FAN_SPEED, 0)
-        else
+        else:
             return self.tuya_device.status.get(DPCODE_FAN_SPEED, 0)
 
     @property

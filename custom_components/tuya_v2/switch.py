@@ -29,12 +29,14 @@ TUYA_SUPPORT_TYPE = {
     "pc",  # Power Strip
     "bh",  # Smart Kettle
     "dlq",  # Breaker
+    "tdq", # Breaker
     "cwysj",  # Pet Water Feeder
     "kj",  # Air Purifier
     "xxj",  # Diffuser
     "ckmkzq",  # Garage Door Opener
     "zndb",  # Smart Electricity Meter
     "fs",  # Fan
+    "sd",  # Vacuum
     "zndb" "kfj",  # Smart Electricity Meter  # Coffee Maker
 }
 
@@ -67,6 +69,9 @@ DPCODE_CLEANING = "cleaning"
 # https://developer.tuya.com/en/docs/iot/f?id=K9gf45vs7vkge
 DPCODE_FAN_LIGHT = "light"
 
+# Vacuum
+#https://developer.tuya.com/en/docs/iot/fsd?id=K9gf487ck1tlo
+DPCODE_VOICE = "voice_switch"
 
 async def async_setup_entry(
     hass: HomeAssistant, _entry: ConfigEntry, async_add_entities
@@ -138,7 +143,13 @@ def _setup_entities(hass: HomeAssistant, device_ids: list):
                 ]:
                     entities.append(TuyaHaSwitch(device, device_manager, function))
                     continue
-
+					
+            elif device.category == "sd":
+                if function in [DPCODE_VOICE ]:
+                    entities.append(TuyaHaSwitch(
+                        device, device_manager, function))
+                    continue
+                    
             else:
                 if function.startswith(DPCODE_START):
                     entities.append(TuyaHaSwitch(device, device_manager, function))

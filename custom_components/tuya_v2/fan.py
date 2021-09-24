@@ -116,7 +116,7 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         # Add legacy fan speeds if the device supports it
         if DPCODE_FAN_SPEED_LEGACY in self.tuya_device.function:
             try:
-                self.dp_code_speed_enum = DPCODE_AP_FAN_SPEED_LEGACY
+                self.dp_code_speed_enum = DPCODE_FAN_SPEED_LEGACY
                 data = json.loads(
                     self.tuya_device.function.get(
                         self.dp_code_speed_enum, {}

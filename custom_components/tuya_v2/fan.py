@@ -295,7 +295,7 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         if (
             DPCODE_AP_FAN_SPEED in self.tuya_device.status
             or DPCODE_AP_FAN_SPEED_ENUM in self.tuya_device.status
-            or DPCODE_AP_FAN_SPEED_LEGACY in self.tuya_device.status
+            or DPCODE_FAN_SPEED_LEGACY in self.tuya_device.status
         ):
             supports = supports | SUPPORT_SET_SPEED
         return supports

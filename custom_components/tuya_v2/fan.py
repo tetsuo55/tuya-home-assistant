@@ -48,7 +48,6 @@ DPCODE_FAN_SPEED = "fan_speed"
 DPCODE_MODE = "mode"
 DPCODE_SWITCH_HORIZONTAL = "switch_horizontal"
 DPCODE_FAN_DIRECTION = "fan_direction"
-DPCODE_FAN_DIRECTION = "fan_direction"
 
 # Air Purifier
 # https://developer.tuya.com/en/docs/iot/s?id=K9gf48r41mn81

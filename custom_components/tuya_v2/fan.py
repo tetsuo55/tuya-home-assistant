@@ -158,7 +158,7 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
                     dp_range = json.loads(self.tuya_device.function.get(self.dp_code_speed_function).values)
                     self.speed_min = dp_range.get("min", 1)
                     self.speed_max = dp_range.get("max", 100)
-                    self.fan_speed_count = int_states_in_range(self.speed_min, self.speed_max)
+                    self.fan_speed_count = int_states_in_range((self.speed_min, self.speed_max))
             except Exception:
                 _LOGGER.error("Cannot parse the legacy speed range")
                 raise

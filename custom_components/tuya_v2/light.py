@@ -128,6 +128,7 @@ class TuyaHaLight(TuyaHaDevice, LightEntity):
 
     def __init__(self, device: TuyaDevice, device_manager: TuyaDeviceManager) -> None:
         """Init TuyaHaLight."""
+        super().__init__(device, device_manager)
         self.dp_code_bright = DPCODE_BRIGHT_VALUE
         self.dp_code_temp = DPCODE_TEMP_VALUE
         self.dp_code_colour = DPCODE_COLOUR_DATA
@@ -139,8 +140,6 @@ class TuyaHaLight(TuyaHaDevice, LightEntity):
                 self.dp_code_temp = key
             elif key.startswith(DPCODE_COLOUR_DATA):
                 self.dp_code_colour = key
-
-        super().__init__(device, device_manager)
 
     @property
     def is_on(self) -> bool:

@@ -226,7 +226,12 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
 
     def turn_off(self, **kwargs: Any) -> None:
         """Turn the fan off."""
-        self._send_command([{"code": DPCODE_SWITCH if DPCODE_SWITCH in self.tuya_device.status elif DPCODE_SWITCH_FSD if DPCODE_SWITCH_FSD in self.tuya_device.status else DPCODE_SWITCH_FAN, "value": False}])
+        if self.tuya_device.category == "fsd":
+            self._send_command([{"code": DPCODE_SWITCH_FSD, "value": False}])
+        elif self.tuya_device.category == "fskg":
+            self._send_command([{"code": DPCODE_SWITCH_FSKG too, "value": False}])
+        else:
+            self._send_command([{"code": DPCODE_SWITCH, "value": False}])
 
     def turn_on(
         self,
@@ -236,10 +241,11 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         **kwargs: Any,
     ) -> None:
         """Turn on the fan."""
-        self._send_command([{"code": DPCODE_SWITCH if DPCODE_SWITCH in self.tuya_device.status elif DPCODE_SWITCH_FSD if DPCODE_SWITCH_FSD in self.tuya_device.status else DPCODE_SWITCH_FAN, "value": True}])
         if self.tuya_device.category == "fsd":
-            self._send_command([{"code": DPCODE_SWITCH_LEGACY, "value": True}])
-        else:  
+            self._send_command([{"code": DPCODE_SWITCH_FSD, "value": True}])
+        elif self.tuya_device.category == "fskg":
+            self._send_command([{"code": DPCODE_SWITCH_FSKG too, "value": True}])
+        else:
             self._send_command([{"code": DPCODE_SWITCH, "value": True}])
 
     def oscillate(self, oscillating: bool) -> None:
@@ -249,7 +255,12 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
     @property
     def is_on(self) -> bool:
         """Return true if fan is on."""
-        return self.tuya_device.status.get(DPCODE_SWITCH if DPCODE_SWITCH in self.tuya_device.status elif DPCODE_SWITCH_FSD if DPCODE_SWITCH_FSD in self.tuya_device.status else DPCODE_SWITCH_FAN, False)
+        if self.tuya_device.category == "fsd":
+            return self.tuya_device.status.get(DPCODE_SWITCH_FSD, False)
+        elif self.tuya_device.category == "fskg":
+            return self.tuya_device.status.get(DPCODE_SWITCH_FSKG, False)
+        else:
+            return self.tuya_device.status.get(DPCODE_SWITCH, False)
 
     @property
     def current_direction(self) -> str:

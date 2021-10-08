@@ -229,7 +229,7 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         if self.tuya_device.category == "fsd":
             self._send_command([{"code": DPCODE_SWITCH_FSD, "value": False}])
         elif self.tuya_device.category == "fskg":
-            self._send_command([{"code": DPCODE_SWITCH_FSKG too, "value": False}])
+            self._send_command([{"code": DPCODE_SWITCH_FSKG, "value": False}])
         else:
             self._send_command([{"code": DPCODE_SWITCH, "value": False}])
 
@@ -244,7 +244,7 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         if self.tuya_device.category == "fsd":
             self._send_command([{"code": DPCODE_SWITCH_FSD, "value": True}])
         elif self.tuya_device.category == "fskg":
-            self._send_command([{"code": DPCODE_SWITCH_FSKG too, "value": True}])
+            self._send_command([{"code": DPCODE_SWITCH_FSKG, "value": True}])
         else:
             self._send_command([{"code": DPCODE_SWITCH, "value": True}])
 

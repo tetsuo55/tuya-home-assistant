@@ -43,7 +43,8 @@ _LOGGER = logging.getLogger(__name__)
 # Fan
 # https://developer.tuya.com/en/docs/iot/f?id=K9gf45vs7vkge
 DPCODE_SWITCH = "switch"
-DPCODE_SWITCH_LEGACY = "fan_switch"
+DPCODE_SWITCH_FSD = "fan_switch"
+DPCODE_SWITCH_FSKG = "switch_fan"
 DPCODE_FAN_SPEED_PERCENT = "fan_speed_percent"
 DPCODE_FAN_SPEED = "fan_speed"
 DPCODE_MODE = "mode"
@@ -59,6 +60,7 @@ TUYA_SUPPORT_TYPE = {
     "fs",  # Fan
     "fsd", # Fan with light
     "kj",  # Air Purifier
+    "fskg", # Fan (DS02 type)
 }
 
 
@@ -224,10 +226,7 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
 
     def turn_off(self, **kwargs: Any) -> None:
         """Turn the fan off."""
-        if self.tuya_device.category == "fsd":
-            self._send_command([{"code": DPCODE_SWITCH_LEGACY, "value": False}])
-        else:              
-            self._send_command([{"code": DPCODE_SWITCH, "value": False}])
+        self._send_command([{"code": DPCODE_SWITCH if DPCODE_SWITCH in self.tuya_device.status elif DPCODE_SWITCH_FSD if DPCODE_SWITCH_FSD in self.tuya_device.status else DPCODE_SWITCH_FAN, "value": False}])
 
     def turn_on(
         self,
@@ -237,6 +236,7 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
         **kwargs: Any,
     ) -> None:
         """Turn on the fan."""
+        self._send_command([{"code": DPCODE_SWITCH if DPCODE_SWITCH in self.tuya_device.status elif DPCODE_SWITCH_FSD if DPCODE_SWITCH_FSD in self.tuya_device.status else DPCODE_SWITCH_FAN, "value": True}])
         if self.tuya_device.category == "fsd":
             self._send_command([{"code": DPCODE_SWITCH_LEGACY, "value": True}])
         else:  
@@ -249,10 +249,7 @@ class TuyaHaFan(TuyaHaDevice, FanEntity):
     @property
     def is_on(self) -> bool:
         """Return true if fan is on."""
-        if self.tuya_device.category == "fsd":
-            return self.tuya_device.status.get(DPCODE_SWITCH_LEGACY, False)
-        else:  
-            return self.tuya_device.status.get(DPCODE_SWITCH, False)
+        return self.tuya_device.status.get(DPCODE_SWITCH if DPCODE_SWITCH in self.tuya_device.status elif DPCODE_SWITCH_FSD if DPCODE_SWITCH_FSD in self.tuya_device.status else DPCODE_SWITCH_FAN, False)
 
     @property
     def current_direction(self) -> str:

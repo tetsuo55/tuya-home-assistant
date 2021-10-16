@@ -85,12 +85,11 @@ async def async_setup_entry(
 
 
 def get_auto_generate_data_points(status) -> list:
-    dps = []
-    for data_point in AUTO_GENERATE_DP_LIST:
-        if data_point in status:
-            dps.append(data_point)
-
-    return dps
+    return [
+        data_point
+        for data_point in AUTO_GENERATE_DP_LIST
+        if data_point in status
+    ]
 
 
 def _setup_entities(

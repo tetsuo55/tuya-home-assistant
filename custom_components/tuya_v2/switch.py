@@ -149,19 +149,19 @@ def _setup_entities(hass, entry: ConfigEntry, device_ids: list[str]) -> list[Ent
                 ]:
                     entities.append(TuyaHaSwitch(device, device_manager, function))
                     tuya_ha_switch = TuyaHaSwitch(device, device_manager, function)
-					
+
             elif device.category == "sd":
                 if function in [DPCODE_VOICE ]:
                     entities.append(TuyaHaSwitch(device, device_manager, function))
                     tuya_ha_switch = TuyaHaSwitch(device, device_manager, function)
 
                     # Main device switch
-            else:
-                if function.startswith(DPCODE_START):
-                    tuya_ha_switch = TuyaHaSwitch(device, device_manager, function)
-                elif function.startswith(DPCODE_SWITCH):
-                    tuya_ha_switch = TuyaHaSwitch(device, device_manager, function)
-
+            elif (
+                function.startswith(DPCODE_START)
+                or not function.startswith(DPCODE_START)
+                and function.startswith(DPCODE_SWITCH)
+            ):
+                tuya_ha_switch = TuyaHaSwitch(device, device_manager, function)
             if tuya_ha_switch is not None:
                 entities.append(tuya_ha_switch)
                 hass.data[DOMAIN][entry.entry_id][TUYA_HA_DEVICES].add(

@@ -144,7 +144,7 @@ class TuyaHaHumidifier(TuyaHaEntity, HumidifierEntity):
         """Return humidifier or dehumidifier support features."""
         supports = 0
         if DPCODE_MODE in self.tuya_device.status:
-            supports = supports | SUPPORT_MODES
+            supports |= SUPPORT_MODES
         return supports
 
     @property
